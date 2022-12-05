@@ -134,6 +134,7 @@ namespace XTC.FMP.MOD.SideMenu.LIB.Unity
             rtPageViewport.sizeDelta = new Vector2(
                 -style_.page.viewport.padding.left - style_.page.viewport.padding.right,
                 -style_.page.viewport.padding.top - style_.page.viewport.padding.bottom);
+            rtPageViewport.localScale = Vector3.one * style_.page.viewport.scale;
         }
 
         protected void publishSubjects(MyConfig.Subject[] _subjects)

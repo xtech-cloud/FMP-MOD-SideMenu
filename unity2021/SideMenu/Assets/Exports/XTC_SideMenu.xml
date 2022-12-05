@@ -61,8 +61,8 @@
         </Item>
       </ItemS>
       <Page image="page_bg.png">
-        <Viewport>
-          <Padding top="140" bottom="80" left="300" right="100"/>
+        <Viewport scale="0.8">
+          <Padding top="30" bottom="-30" left="100" right="-100"/>
         </Viewport>
       </Page>
     </Style>

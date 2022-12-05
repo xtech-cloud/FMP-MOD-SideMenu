@@ -33,6 +33,8 @@ namespace XTC.FMP.MOD.SideMenu.LIB.Unity
 
         public class Viewport
         {
+            [XmlAttribute("scale")]
+            public float scale { get; set; } = 1.0f;
             [XmlElement("Padding")]
             public Padding padding { get; set; } = new Padding();
         }
