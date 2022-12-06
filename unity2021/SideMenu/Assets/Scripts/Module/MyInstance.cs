@@ -20,7 +20,6 @@ namespace XTC.FMP.MOD.SideMenu.LIB.Unity
         {
             public RectTransform menu;
             public Transform templateItem;
-            public Transform templatePageSlot;
             public List<Toggle> itemS = new List<Toggle>();
             public RectTransform page;
         }
@@ -44,8 +43,6 @@ namespace XTC.FMP.MOD.SideMenu.LIB.Unity
             uiReference_.menu = rootUI.transform.Find("menu").GetComponent<RectTransform>();
             uiReference_.templateItem = rootUI.transform.Find("menu/Viewport/Content/itemTemplate");
             uiReference_.templateItem.gameObject.SetActive(false);
-            uiReference_.templatePageSlot = rootUI.transform.Find("page/Viewport/slot");
-            uiReference_.templatePageSlot.gameObject.SetActive(false);
             uiReference_.page = rootUI.transform.Find("page").GetComponent<RectTransform>();
             applyStyle();
         }
@@ -116,9 +113,9 @@ namespace XTC.FMP.MOD.SideMenu.LIB.Unity
                 toggle.onValueChanged.AddListener((_toggled) =>
                 {
                     if (_toggled)
-                        publishSubjects(item.onSubjects);
+                        publishSubjects(item.onSubjects, new Dictionary<string, object>());
                     else
-                        publishSubjects(item.offSubjects);
+                        publishSubjects(item.offSubjects, new Dictionary<string, object>());
                 });
             }
 
@@ -135,27 +132,6 @@ namespace XTC.FMP.MOD.SideMenu.LIB.Unity
                 -style_.page.viewport.padding.left - style_.page.viewport.padding.right,
                 -style_.page.viewport.padding.top - style_.page.viewport.padding.bottom);
             rtPageViewport.localScale = Vector3.one * style_.page.viewport.scale;
-        }
-
-        protected void publishSubjects(MyConfig.Subject[] _subjects)
-        {
-            logger_.Debug("publish");
-            foreach (var subject in _subjects)
-            {
-                var data = new Dictionary<string, object>();
-                foreach (var parameter in subject.parameters)
-                {
-                    if (parameter.type.Equals("string"))
-                        data[parameter.key] = parameter.value;
-                    else if (parameter.type.Equals("int"))
-                        data[parameter.key] = int.Parse(parameter.value);
-                    else if (parameter.type.Equals("float"))
-                        data[parameter.key] = float.Parse(parameter.value);
-                    else if (parameter.type.Equals("bool"))
-                        data[parameter.key] = bool.Parse(parameter.value);
-                }
-                (entry_ as MyEntry).getDummyModel().Publish(subject.message, data);
-            }
         }
 
     }
